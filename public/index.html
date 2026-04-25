@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LNMIIT Library | Book Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-icon"></span>
+                <h2>LNMIIT Library</h2>
+            </div>
+            <nav class="main-nav">
+                <a href="#" class="nav-link active" data-tab="books"> Books</a>
+                <a href="#" class="nav-link" data-tab="members"> Members</a>
+                <a href="#" class="nav-link" data-tab="analytics"> Analytics</a>
+                <a href="#" class="nav-link" data-tab="settings"> Settings</a>
+            </nav>
+            <div class="author-credits">
+                <p>Book Management Module</p>
+                <p class="small">Admin Panel</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-titles">
+                    <h1>Book Management</h1>
+                    <p>Add, update, search, and categorize library collection.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="addBookBtn">
+                        + Add New Book
+                    </button>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff" alt="Admin">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Books Module View -->
+            <div id="booksView">
+                <section class="filters-section">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="searchInput" placeholder="Search by title, author, or ISBN...">
+                    </div>
+                    <div class="category-filter">
+                        <select id="authorSelect">
+                            <option value="">All Authors</option>
+                            <!-- Authors will be populated dynamically -->
+                        </select>
+                    </div>
+                    <div class="category-filter">
+                        <select id="categorySelect">
+                            <option value="">All Categories</option>
+                            <!-- Categories will be populated dynamically -->
+                        </select>
+                    </div>
+                </section>
+
+                <section class="books-table-container">
+                    <table class="books-table">
+                        <thead>
+                            <tr>
+                                <th>Book Details</th>
+                                <th>ISBN</th>
+                                <th>Category</th>
+                                <th>Copies</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="booksList">
+                            <!-- Book items will be injected here -->
+                        </tbody>
+                    </table>
+                    <div class="loading-state" id="loadingState">
+                        <div class="spinner"></div>
+                        <p>Loading collection...</p>
+                    </div>
+                    <div class="empty-state hidden" id="emptyState">
+                        <span style="font-size: 32px; color: #d1d5db; margin-bottom: 4px;">📂</span>
+                        <h3>No books found</h3>
+                        <p>Try adjusting your search or add a new book.</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Placeholder View for Future Modules -->
+            <div id="placeholderView" class="books-table-container hidden"
+                style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px; text-align: center; background: white;">
+                <span style="font-size: 48px; color: #9ca3af; margin-bottom: 16px;">🚧</span>
+                <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 8px; color: #111827;"
+                    id="placeholderTitle">Under Construction</h2>
+                <p style="color: #6b7280; font-size: 14px;">This section is currently being developed.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Book Modal -->
+    <div class="modal-overlay hidden" id="bookModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add New Book</h3>
+                <button class="close-modal" id="closeModalBtn">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="bookForm">
+                    <input type="hidden" id="bookId">
+                    <div class="form-group">
+                        <label for="title">Book Title</label>
+                        <input type="text" id="title" required placeholder="e.g. Introduction to Algorithms">
+                    </div>
+                    <div class="form-group">
+                        <label for="author">Author</label>
+                        <input type="text" id="author" required placeholder="e.g. Thomas H. Cormen">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="isbn">ISBN</label>
+                            <input type="text" id="isbn" required placeholder="e.g. 978-0262033848">
+                        </div>
+                        <div class="form-group col">
+                            <label for="copies">Copies</label>
+                            <input type="number" id="copies" required min="1" value="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <input type="text" id="category" required placeholder="e.g. Computer Science"
+                            list="categoryOptions">
+                        <datalist id="categoryOptions">
+                            <!-- Category options -->
+                        </datalist>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="saveBtn">Save Book</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+node_modules/
+.env
+.npm
+*.log
+test.json
+generate_docs.js
