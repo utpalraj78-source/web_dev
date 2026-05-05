@@ -17,18 +17,18 @@ let isEditing = false;
 let editingId = null;
 let currentTimeout = null;
 document.addEventListener('DOMContentLoaded', () => {
-    fetchBooks();
-    fetchCategories();
-    fetchAuthors();
+fetchBooks();
+fetchCategories();
+fetchAuthors();
 });
 addBookBtn.addEventListener('click', openAddModal);
 closeModalBtn.addEventListener('click', closeModal);
 cancelBtn.addEventListener('click', closeModal);
 bookForm.addEventListener('submit', handleFormSubmit);
 searchInput.addEventListener('input', () => {
-    clearTimeout(currentTimeout);
-    currentTimeout = setTimeout(() => {
-    fetchBooks(searchInput.value, categorySelect.value, authorSelect.value);
+clearTimeout(currentTimeout);
+currentTimeout = setTimeout(() => {
+fetchBooks(searchInput.value, categorySelect.value, authorSelect.value);
     }, 500);
 });
 categorySelect.addEventListener('change', () => {
