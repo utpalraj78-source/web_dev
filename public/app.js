@@ -1,5 +1,4 @@
 const API_URL = '/api/books';
-
 const booksList = document.getElementById('booksList');
 const searchInput = document.getElementById('searchInput');
 const categorySelect = document.getElementById('categorySelect');
@@ -7,7 +6,6 @@ const authorSelect = document.getElementById('authorSelect');
 const loadingState = document.getElementById('loadingState');
 const emptyState = document.getElementById('emptyState');
 const booksTable = document.querySelector('.books-table');
-
 const bookModal = document.getElementById('bookModal');
 const bookForm = document.getElementById('bookForm');
 const addBookBtn = document.getElementById('addBookBtn');
@@ -15,72 +13,30 @@ const closeModalBtn = document.getElementById('closeModalBtn');
 const cancelBtn = document.getElementById('cancelBtn');
 const modalTitle = document.getElementById('modalTitle');
 const categoryOptions = document.getElementById('categoryOptions');
-
 let isEditing = false;
 let editingId = null;
 let currentTimeout = null;
-
 document.addEventListener('DOMContentLoaded', () => {
     fetchBooks();
     fetchCategories();
     fetchAuthors();
 });
-
 addBookBtn.addEventListener('click', openAddModal);
 closeModalBtn.addEventListener('click', closeModal);
 cancelBtn.addEventListener('click', closeModal);
 bookForm.addEventListener('submit', handleFormSubmit);
-
 searchInput.addEventListener('input', () => {
     clearTimeout(currentTimeout);
     currentTimeout = setTimeout(() => {
-        fetchBooks(searchInput.value, categorySelect.value, authorSelect.value);
+    fetchBooks(searchInput.value, categorySelect.value, authorSelect.value);
     }, 500);
 });
-
-const navLinks = document.querySelectorAll('.nav-link');
-const booksView = document.getElementById('booksView');
-const placeholderView = document.getElementById('placeholderView');
-const placeholderTitle = document.getElementById('placeholderTitle');
-const headerTitle = document.querySelector('.header-titles h1');
-const headerDesc = document.querySelector('.header-titles p');
-const headerActions = document.querySelector('.header-actions');
-
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        navLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-        
-        const tab = link.getAttribute('data-tab');
-        
-        if (tab === 'books') {
-            booksView.classList.remove('hidden');
-            placeholderView.classList.add('hidden');
-            headerTitle.textContent = 'Book Management';
-            headerDesc.textContent = 'Add, update, search, and categorize library collection.';
-            headerActions.classList.remove('hidden');
-        } else {
-            booksView.classList.add('hidden');
-            placeholderView.classList.remove('hidden');
-            
-            const moduleName = tab.charAt(0).toUpperCase() + tab.slice(1);
-            headerTitle.textContent = moduleName + ' Management';
-            headerDesc.textContent = 'Manage ' + tab + ' within the LNMIIT Library System.';
-            placeholderTitle.textContent = moduleName + ' Module Under Construction';
-            headerActions.querySelector('#addBookBtn').classList.add('hidden');
-        }
-    });
-});
-
 categorySelect.addEventListener('change', () => {
     fetchBooks(searchInput.value, categorySelect.value, authorSelect.value);
 });
-
 authorSelect.addEventListener('change', () => {
     fetchBooks(searchInput.value, categorySelect.value, authorSelect.value);
 });
-
 async function fetchBooks(search = '', category = '', author = '') {
     showLoading(true);
     try {
@@ -89,11 +45,9 @@ async function fetchBooks(search = '', category = '', author = '') {
         if (search) params.append('search', search);
         if (category) params.append('category', category);
         if (author) params.append('author', author);
-
         if (params.toString()) {
             url += `?${params.toString()}`;
         }
-
         const response = await fetch(url);
         if (!response.ok) throw new Error('Failed to fetch books');
         
@@ -106,19 +60,16 @@ async function fetchBooks(search = '', category = '', author = '') {
         showLoading(false);
     }
 }
-
 async function fetchCategories() {
     try {
         const response = await fetch(`${API_URL}/categories/all`);
         if (!response.ok) return;
-        
         const categories = await response.json();
         categories.forEach(cat => {
             const option = document.createElement('option');
             option.value = cat;
             option.textContent = cat;
             categorySelect.appendChild(option);
-
             const dlOption = document.createElement('option');
             dlOption.value = cat;
             categoryOptions.appendChild(dlOption);
@@ -127,7 +78,6 @@ async function fetchCategories() {
         console.log('Failed to load categories', error);
     }
 }
-
 async function fetchAuthors() {
     try {
         const response = await fetch(`${API_URL}/authors/all`);

@@ -94,11 +94,10 @@ router.put('/:id', async (req, res) => {
       book.isbn = req.body.isbn || book.isbn;
       book.copies = req.body.copies !== undefined ? req.body.copies : book.copies;
       book.category = req.body.category || book.category;
-
       const updatedBook = await book.save();
       res.json(updatedBook);
     } else {
-      res.status(404).json({ message: 'Book not found' });
+      res.status(404).json({ message: 'notupdated ' });
     }
   } catch (error) {
     res.status(400).json({ message: error.message });
